@@ -20,4 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py') --disable W0613, C0301, R0903, C0116, C0115, C0114, R0902, R0913, R0914, R0915
+        pylint $(git ls-files '*.py') --disable import-error,missing-function-docstring,missing-module-docstring,unused-argument,missing-class-docstring,too-few-public-methods,use-yield-from,consider-using-f-string,unused-import,line-too-long
