@@ -27,4 +27,3 @@ class PagelistSpiderSpider(scrapy.Spider):
         product_item['product_category'] = response.css("ol.breadcrumbs-list li.breadcrumbs-list-item:nth-last-child(2) a ::text").get()
 
         yield product_item
-
