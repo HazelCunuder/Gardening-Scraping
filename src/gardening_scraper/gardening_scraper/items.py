@@ -16,8 +16,8 @@ class ProductsItem(scrapy.Item):
     name = scrapy.Field()
     price_euros = scrapy.Field()
     price_cents = scrapy.Field()
+    price_concat = scrapy.Field()
     product_id = scrapy.Field()
     product_code = scrapy.Field()
     product_category = scrapy.Field()
-    promotions = scrapy.Field()
         
