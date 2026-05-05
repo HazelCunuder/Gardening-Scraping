@@ -5,8 +5,8 @@
 
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
 import re
+from itemadapter import ItemAdapter
 
 
 class GardeningScraperPipeline:
@@ -29,3 +29,4 @@ class ProductPipeline:
             item['product_code'] = int(re.sub(r'\D', '', item['product_code']))
 
         return item
+    
