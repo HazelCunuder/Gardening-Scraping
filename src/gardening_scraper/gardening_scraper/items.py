@@ -20,4 +20,5 @@ class ProductsItem(scrapy.Item):
     product_id = scrapy.Field()
     product_code = scrapy.Field()
     product_category = scrapy.Field()
+    description = scrapy.Field()
         
