@@ -18,7 +18,7 @@ class CategoryspiderSpider(scrapy.Spider):
         if categories:
             for category in categories:
                 category_item = CategoryItem()
-            
+
                 cat_url  = "https://www.bricodepot.fr" + category.css('a.plp-univers-subcategory-title::attr(href)').get()
 
                 category_item['category_name']   =  category.css('a.plp-univers-subcategory-title::text').get()
@@ -31,6 +31,6 @@ class CategoryspiderSpider(scrapy.Spider):
                 yield response.follow(cat_url, callback  = self.parse)
     #     else:
     #         yield from self.parse_product(response)
-    
+
     # def parse_product(self, response):
     #     pass
