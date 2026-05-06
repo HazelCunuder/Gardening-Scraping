@@ -219,3 +219,6 @@ __marimo__/
 
 # IntelliJ
 .idea/
+
+# Data files
+.json
