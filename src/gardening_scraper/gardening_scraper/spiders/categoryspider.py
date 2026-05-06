@@ -13,8 +13,7 @@ class CategoryspiderSpider(scrapy.Spider):
     }
 
     def parse(self, response):
-        categories = response.css('li.plp-univers-subcategory-list-item')
-        
+        categories = response.css('li.plp-univers-subcategory-list-item')    
         filters = ["modele","premier-prix", "1er-prix","promo","offres","promotion","occasion","soldes","bons-plans", "actu", "actualites"]
 
         if categories:
@@ -28,7 +27,7 @@ class CategoryspiderSpider(scrapy.Spider):
                     if word in cat_url:
                         real_category = False
                         break
-                
+
                 if real_category:
                     category_item['category_name']   = category.css('a.plp-univers-subcategory-title::text').get()
                     category_item['url']             = cat_url
