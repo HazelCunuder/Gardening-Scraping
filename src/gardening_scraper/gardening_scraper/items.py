@@ -11,6 +11,13 @@ class GardeningScraperItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+class CategoryItem(scrapy.Item):
+    category_name = scrapy.Field()
+    url = scrapy.Field()
+    category_id = scrapy.Field()
+    parent_category = scrapy.Field()
+    image_url = scrapy.Field()
+
 class ProductsItem(scrapy.Item):
     url = scrapy.Field()
     name = scrapy.Field()
@@ -21,4 +28,3 @@ class ProductsItem(scrapy.Item):
     product_code = scrapy.Field()
     product_category = scrapy.Field()
     description = scrapy.Field()
-        
