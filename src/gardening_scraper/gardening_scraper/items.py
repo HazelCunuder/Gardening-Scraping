@@ -18,3 +18,14 @@ class CategoryItem(scrapy.Item):
     parent_category = scrapy.Field()
     image_url = scrapy.Field()
     
+class ProductsItem(scrapy.Item):
+    url = scrapy.Field()
+    name = scrapy.Field()
+    price_euros = scrapy.Field()
+    price_cents = scrapy.Field()
+    price_concat = scrapy.Field()
+    product_id = scrapy.Field()
+    product_code = scrapy.Field()
+    product_category = scrapy.Field()
+    description = scrapy.Field()
+        
