@@ -1,4 +1,6 @@
 import scrapy
+import json
+import math
 from gardening_scraper.items import ProductsItem
 
 class PagelistSpiderSpider(scrapy.Spider):
@@ -9,15 +11,37 @@ class PagelistSpiderSpider(scrapy.Spider):
         }
     }
     allowed_domains = ["www.bricodepot.fr"]
-    start_urls = ["https://www.bricodepot.fr/produits/cuisine/electromenager-et-equipement-de-cuisine/electromenager/petit-electromenager"]
+    start_urls = ["https://www.bricodepot.fr/produits/carrelage-stratifie-et-parquet/stratifie-parquet-et-sol-vinyle-pvc/sol-stratifie"]
 
     def parse(self, response):
-        products = response.css("div.plp-products-grid article.product-card")
-
-        for product in products:
-            relative_url = product.css("a.product-card-link ::attr(href)").get()
-            product_url = "https://www.bricodepot.fr"+relative_url
-            yield response.follow(product_url, callback= self.parse_product_page)
+        for script in response.css('script::text').getall():
+            script = script.strip()
+            if '"ItemList"' not in script or 'itemListElement' not in script:
+                continue
+            
+            data = json.loads(script)
+            products = data.get('itemListElement', [])
+            total_products = data.get('numberOfItems')
+            products_per_page = len(products)
+            current_page = response.meta.get('page', 1)
+    
+            self.logger.info(f"Page {current_page}: {products_per_page} products, total={total_products}, last_page={math.ceil(total_products / products_per_page) if total_products and products_per_page else 'unknown'}")
+    
+            for entry in products:
+                product = entry.get('item', {})
+                product_url = product.get('url')
+                if product_url:
+                    yield response.follow(product_url, callback=self.parse_product_page)
+    
+            if total_products and products_per_page:
+                last_page = math.ceil(total_products / products_per_page)
+                if current_page < last_page:
+                    yield response.follow(
+                        f"{self.start_urls[0]}/{current_page + 1}",
+                        callback=self.parse,
+                        meta={'page': current_page + 1}
+                    )
+            break
 
     def parse_product_page(self,response):
         product_item = ProductsItem()
