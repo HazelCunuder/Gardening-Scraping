@@ -21,8 +21,8 @@ class CategoryspiderSpider(scrapy.Spider):
 
                 cat_url  = "https://www.bricodepot.fr" + category.css('a.plp-univers-subcategory-title::attr(href)').get()
 
-                category_item['category_name']   =  category.css('a.plp-univers-subcategory-title::text').get()
-                category_item['url']             =  cat_url
+                category_item['category_name']   = category.css('a.plp-univers-subcategory-title::text').get()
+                category_item['url']             = cat_url
                 category_item['category_id']     = cat_url.split('/')[-1]
                 category_item['parent_category'] = response.url.split('/')[-1]
                 category_item['image_url'] = category.css('img::attr(src)').get()
