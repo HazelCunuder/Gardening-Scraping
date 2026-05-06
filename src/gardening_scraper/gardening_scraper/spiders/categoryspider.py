@@ -1,5 +1,5 @@
 import scrapy
-from gardening_scraper.gardening_scraper.items import CategoryItem
+from gardening_scraper.items import CategoryItem
 
 class CategoryspiderSpider(scrapy.Spider):
     name            = "categories"
@@ -11,8 +11,8 @@ class CategoryspiderSpider(scrapy.Spider):
             'categories.csv': {'format': 'csv', 'overwrite': True}
         },
         "ITEM_PIPELINES": {
-            'gardening_scraper.gardening_scraper.pipelines.GardeningScraperPipeline': 100,
-            'gardening_scraper.gardening_scraper.pipelines.PostgreSQLPipeline': 300,
+            'gardening_scraper.pipelines.GardeningScraperPipeline': 100,
+            'gardening_scraper.pipelines.PostgreSQLPipeline': 300,
         }
     }
 

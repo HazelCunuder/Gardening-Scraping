@@ -7,9 +7,9 @@ class PagelistSpiderSpider(scrapy.Spider):
     name = "pagelist_spider"
     custom_settings = {
         "ITEM_PIPELINES": {
-            'gardening_scraper.gardening_scraper.pipelines.GardeningScraperPipeline': 100,
-            'gardening_scraper.gardening_scraper.pipelines.ProductPipeline': 200,
-            'gardening_scraper.gardening_scraper.pipelines.PostgreSQLPipeline': 300,
+            'gardening_scraper.pipelines.GardeningScraperPipeline': 100,
+            'gardening_scraper.pipelines.ProductPipeline': 200,
+            'gardening_scraper.pipelines.PostgreSQLPipeline': 300,
         }
     }
     allowed_domains = ["www.bricodepot.fr"]
