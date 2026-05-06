@@ -7,11 +7,54 @@
 # useful for handling different item types with a single interface
 import re
 from itemadapter import ItemAdapter
+import psycopg2
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
+from gardening_scraper.gardening_scraper.database import get_session
+from gardening_scraper.gardening_scraper.items import CategoryItem, ProductsItem
+from gardening_scraper.gardening_scraper.models import Category, Product
+
+load_dotenv()
+
+# les noms des champs doivent être les mêmes des deux côtés
+ITEM_MODEL_MAP = {
+    CategoryItem: Category,
+    ProductsItem: Product,
+}
 
 class GardeningScraperPipeline:
     def process_item(self, item, spider):
         return item
+
+class PostgreSQLPipeline:
+
+    def open_spider(self, spider):
+        self.session = get_session()
+        spider.logger.info("Connexion PostgreSQL établie.")
+
+    def process_item(self, item, spider):
+        model_class = ITEM_MODEL_MAP.get(type(item))
+
+        if model_class is None:
+            spider.logger.warning(f"Item non géré : {type(item).__name__}")
+            return item
+
+        instance = model_class(**{
+            k: item.get(k) for k in item.fields
+        })
+
+        self.session.add(instance)
+        self.session.commit()
+        return item
+
+    def close_spider(self, spider):
+        self.session.commit()
+        self.session.close()
+        spider.logger.info("Connexion PostgreSQL fermée.")
+
 
 class ProductPipeline:
     def process_item(self, item, spider):
