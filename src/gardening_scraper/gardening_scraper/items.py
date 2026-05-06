@@ -17,7 +17,7 @@ class CategoryItem(scrapy.Item):
     category_id = scrapy.Field()
     parent_category = scrapy.Field()
     image_url = scrapy.Field()
- 
+
 class ProductsItem(scrapy.Item):
     url = scrapy.Field()
     name = scrapy.Field()
@@ -27,4 +27,4 @@ class ProductsItem(scrapy.Item):
     product_id = scrapy.Field()
     product_code = scrapy.Field()
     product_category = scrapy.Field()
-    description = scrapy.Field()  
+    description = scrapy.Field()
