@@ -15,7 +15,7 @@ class CategoryspiderSpider(scrapy.Spider):
     def parse(self, response):
         categories = response.css('li.plp-univers-subcategory-list-item')
         
-        filters = ["modele","premier-prix", "1er-prix","promo","offres"]
+        filters = ["modele","premier-prix", "1er-prix","promo","offres","promotion","occasion","soldes"]
 
         if categories:
             for category in categories:
