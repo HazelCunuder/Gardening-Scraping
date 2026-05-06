@@ -12,23 +12,33 @@ class CategoryspiderSpider(scrapy.Spider):
         }
     }
 
-    def parse(self, response, parent_category="Home"):
+    def parse(self, response):
         categories = response.css('li.plp-univers-subcategory-list-item')
+        
+        filters = ["modele","premier-prix", "1er-prix","promo","offres"]
 
         if categories:
             for category in categories:
                 category_item = CategoryItem()
 
                 cat_url  = "https://www.bricodepot.fr" + category.css('a.plp-univers-subcategory-title::attr(href)').get()
+                
+                real_category = True
+                for word in filters:
+                    if word in cat_url:
+                        real_category = False
+                        break
+                
+                if real_category:
+                    category_item['category_name']   = category.css('a.plp-univers-subcategory-title::text').get()
+                    category_item['url']             = cat_url
+                    category_item['category_id']     = cat_url.split('/')[-1]
+                    category_item['parent_category'] = response.url.split('/')[-1]
+                    category_item['image_url'] = category.css('img::attr(src)').get()
+                    yield category_item
 
-                category_item['category_name']   = category.css('a.plp-univers-subcategory-title::text').get()
-                category_item['url']             = cat_url
-                category_item['category_id']     = cat_url.split('/')[-1]
-                category_item['parent_category'] = response.url.split('/')[-1]
-                category_item['image_url'] = category.css('img::attr(src)').get()
-                yield category_item
-
-                yield response.follow(cat_url, callback  = self.parse)
+                    yield response.follow(cat_url, callback  = self.parse)
+                # break
     #     else:
     #         yield from self.parse_product(response)
 
