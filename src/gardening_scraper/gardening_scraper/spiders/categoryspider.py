@@ -18,19 +18,19 @@ class CategoryspiderSpider(scrapy.Spider):
         if categories:
             for category in categories:
                 category_item = CategoryItem()
-                
-                name = category.css('a.plp-univers-subcategory-title::text').get()
+            
                 cat_url  = "https://www.bricodepot.fr" + category.css('a.plp-univers-subcategory-title::attr(href)').get()
 
-                category_item['category_name']   = name
+                category_item['category_name']   =  category.css('a.plp-univers-subcategory-title::text').get()
                 category_item['url']             =  cat_url
-                # category_item['category_id']     = id
-                category_item['parent_category'] = parent_category
+                category_item['category_id']     = cat_url.split('/')[-1]
+                category_item['parent_category'] = response.url.split('/')[-1]
+                category_item['image_url'] = category.css('img::attr(src)').get()
                 yield category_item
 
-                yield response.follow(cat_url, callback  = self.parse, cb_kwargs = {'parent_category': name})
-        else:
-            yield from self.parse_products(response)
+                yield response.follow(cat_url, callback  = self.parse)
+    #     else:
+    #         yield from self.parse_product(response)
     
-    def parse_product(self, response):
-        pass
+    # def parse_product(self, response):
+    #     pass

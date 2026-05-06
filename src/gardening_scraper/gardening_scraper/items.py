@@ -16,4 +16,5 @@ class CategoryItem(scrapy.Item):
     url = scrapy.Field()
     category_id = scrapy.Field()
     parent_category = scrapy.Field()
+    image_url = scrapy.Field()
     
