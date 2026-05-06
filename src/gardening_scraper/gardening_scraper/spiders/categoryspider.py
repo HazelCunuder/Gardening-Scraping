@@ -15,7 +15,7 @@ class CategoryspiderSpider(scrapy.Spider):
     def parse(self, response):
         categories = response.css('li.plp-univers-subcategory-list-item')
         
-        filters = ["modele","premier-prix", "1er-prix","promo","offres","promotion","occasion","soldes"]
+        filters = ["modele","premier-prix", "1er-prix","promo","offres","promotion","occasion","soldes","bons-plans", "actu", "actualites"]
 
         if categories:
             for category in categories:
@@ -38,9 +38,4 @@ class CategoryspiderSpider(scrapy.Spider):
                     yield category_item
 
                     yield response.follow(cat_url, callback  = self.parse)
-                # break
-    #     else:
-    #         yield from self.parse_product(response)
-
-    # def parse_product(self, response):
-    #     pass
+                    break # à effacer ou commenter pour récuperer toutes les catégories
