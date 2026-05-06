@@ -21,7 +21,7 @@ class CategoryspiderSpider(scrapy.Spider):
                 category_item = CategoryItem()
 
                 cat_url  = "https://www.bricodepot.fr" + category.css('a.plp-univers-subcategory-title::attr(href)').get()
-                
+
                 real_category = True
                 for word in filters:
                     if word in cat_url:
