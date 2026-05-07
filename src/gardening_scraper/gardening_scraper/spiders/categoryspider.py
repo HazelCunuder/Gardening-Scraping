@@ -12,8 +12,9 @@ class CategoryspiderSpider(scrapy.Spider):
         }
     }
 
-    def parse(self, response, parent_category="Home"):
+    def parse(self, response):
         categories = response.css('li.plp-univers-subcategory-list-item')
+        filters = ["modele","premier-prix", "1er-prix","promo","offres","promotion","occasion","soldes","bons-plans", "actu", "actualites"]
 
         if categories:
             for category in categories:
@@ -21,16 +22,19 @@ class CategoryspiderSpider(scrapy.Spider):
 
                 cat_url  = "https://www.bricodepot.fr" + category.css('a.plp-univers-subcategory-title::attr(href)').get()
 
-                category_item['category_name']   =  category.css('a.plp-univers-subcategory-title::text').get()
-                category_item['url']             =  cat_url
-                category_item['category_id']     = cat_url.split('/')[-1]
-                category_item['parent_category'] = response.url.split('/')[-1]
-                category_item['image_url'] = category.css('img::attr(src)').get()
-                yield category_item
+                real_category = True
+                for word in filters:
+                    if word in cat_url:
+                        real_category = False
+                        break
 
-                yield response.follow(cat_url, callback  = self.parse)
-    #     else:
-    #         yield from self.parse_product(response)
+                if real_category:
+                    category_item['category_name']   = category.css('a.plp-univers-subcategory-title::text').get()
+                    category_item['url']             = cat_url
+                    category_item['category_id']     = cat_url.split('/')[-1]
+                    category_item['parent_category'] = response.url.split('/')[-1]
+                    category_item['image_url'] = category.css('img::attr(src)').get()
+                    yield category_item
 
-    # def parse_product(self, response):
-    #     pass
+                    yield response.follow(cat_url, callback  = self.parse)
+                    break # à effacer ou commenter pour récuperer toutes les catégories
