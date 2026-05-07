@@ -17,8 +17,8 @@ def get_engine():
 
 def get_session():
     engine = get_engine()
-    Session = sessionmaker(bind=engine)
-    return Session()
+    session = sessionmaker(bind=engine)
+    return session()
 
 def init_db():
     engine = get_engine()

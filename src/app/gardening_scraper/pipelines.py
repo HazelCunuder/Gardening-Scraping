@@ -25,6 +25,9 @@ class GardeningScraperPipeline:
 
 class PostgreSQLPipeline:
 
+    def __init__(self):
+        self.session = None
+
     def open_spider(self, spider):
         self.session = get_session()
         spider.logger.info("Connexion PostgreSQL établie.")
