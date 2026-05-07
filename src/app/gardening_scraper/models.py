@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Text, create_engine
+from sqlalchemy import Column, Integer, String, Float, Text, BigInteger
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -23,7 +23,7 @@ class Product(Base):
     price_euros      = Column(Float)
     price_cents      = Column(Float)
     price_concat     = Column(Float)
-    product_id       = Column(Integer)
+    product_id       = Column(BigInteger)
     product_code     = Column(Integer)
     product_category = Column(String(255))
     description      = Column(Text)

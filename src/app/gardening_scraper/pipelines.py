@@ -60,6 +60,13 @@ class ProductPipeline:
             if isinstance(item[field], str):
                 item[field] = item[field].strip()
 
+        # enlever le €
+        if item.get('price_cents'):
+            item['price_cents'] = item['price_cents'].replace('€', '').strip()
+
+        if item.get('price_euros'):
+            item['price_euros'] = item['price_euros'].replace('€', '').strip()
+
         # price_concat
         if item.get('price_concat'):
             try:
