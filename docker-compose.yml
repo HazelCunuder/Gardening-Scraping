@@ -7,7 +7,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - garden_database:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro # permet de créer les tables automatiquement
     networks:
       - garden-network
     ports:
