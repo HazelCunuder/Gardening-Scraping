@@ -14,19 +14,32 @@ class GardeningScraperPipeline:
         return item
 
 class ProductPipeline:
-
     def process_item(self, item, spider):
+        # Strip whitespace from all string fields
         for field in item:
             if isinstance(item[field], str):
                 item[field] = item[field].strip()
 
+        # price_concat
         if item.get('price_concat'):
-            item['price_concat'] = float(item['price_concat'].replace('€', '.'))
+            try:
+                item['price_concat'] = float(item['price_concat'].replace('€', '.'))
+            except (ValueError, AttributeError):
+                item['price_concat'] = None
 
+        # product_id
         if item.get('product_id'):
-            item['product_id'] = int(re.sub(r'\D', '', item['product_id']))
+            try:
+                item['product_id'] = int(re.sub(r'\D', '', item['product_id']))
+            except (ValueError, AttributeError):
+                item['product_id'] = None
+
+        # product_code
         if item.get('product_code'):
-            item['product_code'] = int(re.sub(r'\D', '', item['product_code']))
+            try:
+                item['product_code'] = int(re.sub(r'\D', '', item['product_code']))
+            except (ValueError, AttributeError):
+                item['product_code'] = None
 
         return item
     
