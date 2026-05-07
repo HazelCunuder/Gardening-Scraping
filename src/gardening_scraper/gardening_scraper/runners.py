@@ -9,7 +9,7 @@ if not os.path.exists(LOG_DIRECTORY):
     print(f"Directory not exist : {os.path.exists(LOG_DIRECTORY)} created.")
     os.makedirs(LOG_DIRECTORY)
 else:
-    print(f"Directory already exist.")
+    print("Directory already exist.")
 
 log_file = os.path.join(LOG_DIRECTORY, f"{SPIDER}.log")
 
