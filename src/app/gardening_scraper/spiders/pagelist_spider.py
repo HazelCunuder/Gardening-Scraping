@@ -35,14 +35,16 @@ class PagelistSpiderSpider(scrapy.Spider):
                 if product_url:
                     yield response.follow(product_url, callback=self.parse_product_page)
 
-            if products_per_page == total_products or current_page * products_per_page >= total_products:
-                self.logger.info(f"Reached last page at page {current_page}, stopping.")
-            else:
-                yield response.follow(
-                    f"{self.start_urls[0]}/{current_page + 1}",
-                    callback=self.parse,
-                    meta={'page': current_page + 1}
-                )
+            if total_products and products_per_page:
+                import math
+                last_page = math.ceil(total_products / products_per_page)
+                self.logger.info(f"Page {current_page}/{last_page} | {total_products} total products, {products_per_page} per page")
+                if current_page < last_page:
+                    yield response.follow(
+                        f"{self.start_urls[0]}/{current_page + 1}",
+                        callback=self.parse,
+                        meta={'page': current_page + 1}
+                    )
             break
 
     def parse_product_page(self,response):
