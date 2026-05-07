@@ -36,7 +36,6 @@ class PagelistSpiderSpider(scrapy.Spider):
                     yield response.follow(product_url, callback=self.parse_product_page)
 
             if total_products and products_per_page:
-                import math
                 last_page = math.ceil(total_products / products_per_page)
                 self.logger.info(f"Page {current_page}/{last_page} | {total_products} total products, {products_per_page} per page")
                 if current_page < last_page:
