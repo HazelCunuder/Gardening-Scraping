@@ -1,4 +1,9 @@
-scrapy==2.15.2
-sqlalchemy==2.0.49
-python-dotenv==1.2.2
 psycopg2-binary==2.9.12
+python-dotenv==1.2.2
+Scrapy==2.15.2
+scrapy-user-agents==0.1.1
+
+SQLAlchemy==2.0.49
+
+user-agents==2.2.0
+
