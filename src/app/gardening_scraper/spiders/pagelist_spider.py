@@ -1,7 +1,7 @@
 import json
 import math
 import scrapy
-from gardening_scraper.items import ProductsItem
+from ..items import ProductsItem
 
 class PagelistSpiderSpider(scrapy.Spider):
     name = "pagelist_spider"

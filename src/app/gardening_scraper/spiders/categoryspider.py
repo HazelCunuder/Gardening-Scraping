@@ -1,5 +1,5 @@
 import scrapy
-from gardening_scraper.items import CategoryItem
+from ..items import CategoryItem
 
 class CategoryspiderSpider(scrapy.Spider):
     name            = "categories"

@@ -6,16 +6,10 @@
 
 # useful for handling different item types with a single interface
 import re
-from itemadapter import ItemAdapter
-import psycopg2
-import os
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from gardening_scraper.database import get_session
-from gardening_scraper.items import CategoryItem, ProductsItem
-from gardening_scraper.models import Category, Product
+from .database import get_session
+from .items import CategoryItem, ProductsItem
+from .models import Category, Product
 
 load_dotenv()
 
