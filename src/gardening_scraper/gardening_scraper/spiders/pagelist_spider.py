@@ -14,7 +14,7 @@ class PagelistSpiderSpider(scrapy.Spider):
     start_urls = ["https://www.bricodepot.fr/produits/carrelage-stratifie-et-parquet/stratifie-parquet-et-sol-vinyle-pvc/sol-stratifie"]
 
     def parse(self, response):
-        
+
         for script in response.css('script::text').getall():
             current_page = response.meta.get('page', 1)
             script = script.strip()
